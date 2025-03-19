@@ -12,7 +12,8 @@
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .pase{
+    animation-play-state: paused;
   }
-}
+  }
+
