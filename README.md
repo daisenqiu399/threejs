@@ -1,4 +1,5 @@
 # 技术栈 Next.js, Three.js, and Tailwind CSS 🔥
+## 参考YouTub,感谢 [codebucks27](https://www.youtube.com/watch?v=T5t46vuW8fo&t=14106s)
 -
 # ⭐DO NOT FORGET TO STAR THIS REPO⭐
 ---
