@@ -4,7 +4,7 @@ import { Volume2, VolumeX } from "lucide-react"
 import React, { useEffect, useState, useRef } from "react"
 import { createPortal } from "react-dom"
 
-const Mmodel = ({ onClose, toggle }) => {
+const Modal = ({ onClose, toggle }) => {
     return createPortal(
         <div className="fixed inset-0 bg-background/60 backdrop-blur-sm flex items-center justify-center">
             <div className="bg-background/20 border-accent/30 border-solid backdrop-blur-[6px]
@@ -19,7 +19,7 @@ const Mmodel = ({ onClose, toggle }) => {
                         Yes
                     </button>
                     <button
-                        onClick={toggle}
+                        onClick={onClose}
                         className="px-4 py-2 border-accent/30 border-solid hover:shadow-glass-sm rounded"
                     >
                         No
@@ -64,6 +64,49 @@ const Sound=()=>{
         setShowModel(true);
     }
     },[]);
-    
+   const toggle=()=>{
+    const newState=!isPlaying;
+    setIsPlaying(!isPlaying);
+    newState?audioRef.current.play():audioRef.current.pause();
+    localStorage.setItem("musicConsent",String(newState));
+    localStorage.setItem('consentTime',new Date().toISOString());
+    setShowModel(false);
+   };
+   return(
+    <div className="fixed top-4 right-2.5 xs:right-4 z-50 group">
+        {showModel&&(
+            <Modal onClose={()=>setShowModel(false)} toggle={toggle}/>
+        )}
+        <audio ref={audioRef} loop>
+            <source src={'/audio/birds39-forest-20772.mp3'} type="audio/mpeg"/>
+            your browser does not support the audio element.
+        </audio>
+        <motion.div
+        onClick={toggle}
+        initial={{scale:0}}
+        animate={{scale:1}}
+        transition={{delay:1}}
+        className="w-10 h-10 xs:w-14 xs:h-14 text-foreground rounded-full flex items-center justify-center cursor-pointer z-50 p-2.5 xs:p-4 custom-bg"
+        aria-label={'Sound control button'}
+        name={'Sound control button'}
+        >
+            {isPlaying?(
+                <Volume2 
+                className="w-full h-full text-foreground group-hover:text-accent"
+                strokeWidth={1.5}
+                />
+            ):(
+                <VolumeX
+                className="w-full h-full text-foreground group-hover:text-accent"
+                strokeWidth={1.5}
+                />
+            )}
 
-}
+        </motion.div>
+
+    </div>
+   );
+
+
+};
+export default Sound;
